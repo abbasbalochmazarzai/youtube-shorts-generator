@@ -13,12 +13,16 @@ if st.button("Generate Shorts Clips"):
     if url:
         st.info("⏳ Video fetch ho rahi hai... Baraye meherbani thoda intezar karen.")
         
-        # Simple and universal download settings
+        # Advanced options to bypass 403 Forbidden block on cloud servers
         ydl_opts = {
             'outtmpl': 'downloaded_video.mp4',
             'overwrites': True,
             'geo_bypass': True,
             'nocheckcertificate': True,
+            'extractor_args': {'youtube': {'player_client': ['android', 'web']}},
+            'http_headers': {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+            }
         }
         
         try:
