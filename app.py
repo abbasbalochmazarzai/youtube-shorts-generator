@@ -13,9 +13,8 @@ if st.button("Generate Shorts Clips"):
     if url:
         st.info("⏳ Video fetch ho rahi hai... Baraye meherbani thoda intezar karen.")
         
-        # Updated options to bypass 403 Forbidden error
+        # Simple and universal download settings
         ydl_opts = {
-            'format': 'best[ext=mp4]/best',
             'outtmpl': 'downloaded_video.mp4',
             'overwrites': True,
             'geo_bypass': True,
@@ -36,4 +35,4 @@ if st.button("Generate Shorts Clips"):
         except Exception as e:
             st.error(f"Error aaya hai: {str(e)}")
     else:
-        st.warning("⚠️ Pehle koi YouTube link enter karan!")
+        st.warning("⚠️ Pehle koi YouTube link enter karen!")
