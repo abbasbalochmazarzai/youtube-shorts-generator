@@ -1,13 +1,37 @@
 import streamlit as st
+import yt_dlp
+import os
 
-st.title("YouTube to Shorts Generator")
-st.write("Apni YouTube video ka link neeche paste karen:")
+st.set_page_config(page_title="Free YouTube Shorts Generator", layout="centered")
 
-url = st.text_input("YouTube Video URL")
+st.title("🎬 YouTube to Shorts Generator")
+st.write("Apni YouTube video ka link paste karen, hum us me se aapko clips process karke denge.")
 
-if st.button("Generate Shorts"):
+url = st.text_input("YouTube Video URL Here:", placeholder="https://www.youtube.com/watch?v=...")
+
+if st.button("Generate Shorts Clips"):
     if url:
-        st.success(f"Processing video: {url}")
-        st.info("AI video ko analyze kar raha hai...")
+        st.info("⏳ Video fetch ho rahi hai... Baraye meherbani thoda intezar karen.")
+        
+        # Simple download config
+        ydl_opts = {
+            'format': 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best',
+            'outtmpl': 'downloaded_video.mp4',
+            'overwrites': True
+        }
+        
+        try:
+            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                ydl.download([url])
+            
+            st.success("✅ Video successfully download ho gayi hai!")
+            
+            # Show original video preview
+            if os.path.exists("downloaded_video.mp4"):
+                st.video("downloaded_video.mp4")
+                st.info("💡 Next step: AI transcript and auto-cropping logic integration.")
+                
+        except Exception as e:
+            st.error(f"Error aaya hai: {str(e)}")
     else:
-        st.warning("Kharab link! Barae meherbani sahi YouTube URL daalein.")
+        st.warning("⚠️ Pehle koi YouTube link enter karen!")
