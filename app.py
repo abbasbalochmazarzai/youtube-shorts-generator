@@ -13,11 +13,13 @@ if st.button("Generate Shorts Clips"):
     if url:
         st.info("⏳ Video fetch ho rahi hai... Baraye meherbani thoda intezar karen.")
         
-        # Simple download config
+        # Updated options to bypass 403 Forbidden error
         ydl_opts = {
-            'format': 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best',
+            'format': 'best[ext=mp4]/best',
             'outtmpl': 'downloaded_video.mp4',
-            'overwrites': True
+            'overwrites': True,
+            'geo_bypass': True,
+            'nocheckcertificate': True,
         }
         
         try:
@@ -29,9 +31,9 @@ if st.button("Generate Shorts Clips"):
             # Show original video preview
             if os.path.exists("downloaded_video.mp4"):
                 st.video("downloaded_video.mp4")
-                st.info("💡 Next step: AI transcript and auto-cropping logic integration.")
+                st.info("💡 Next step: AI script analysis & short video cutting.")
                 
         except Exception as e:
             st.error(f"Error aaya hai: {str(e)}")
     else:
-        st.warning("⚠️ Pehle koi YouTube link enter karen!")
+        st.warning("⚠️ Pehle koi YouTube link enter karan!")
